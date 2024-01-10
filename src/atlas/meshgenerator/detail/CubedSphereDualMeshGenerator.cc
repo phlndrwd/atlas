@@ -62,10 +62,14 @@ CubedSphereDualMeshGenerator::CubedSphereDualMeshGenerator(const eckit::Parametr
     }
 
     // Get partitioner.
-    std::string partitioner;
-    try { p.get("partitioner.type", partitioner); } catch( std::exception& ) {}
-    p.get("partitioner", partitioner);
-    if( partitioner.size() ) {
+    if (p.has("partitioner.type")) {
+        std::string partitioner;
+        p.get("partitioner.type", partitioner);
+        options.set("partitioner", partitioner);
+    }
+    else if (p.has("partitioner")) {
+        std::string partitioner;
+        p.get("partitioner", partitioner);
         options.set("partitioner", partitioner);
     }
 }
