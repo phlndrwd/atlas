@@ -72,16 +72,18 @@ CubedSphereMeshGenerator::CubedSphereMeshGenerator(const eckit::Parametrisation&
     }
 
     // Get partitioner.
-    if (p.has("partitioner.type")) {
-        std::string partitioner;
-        p.get("partitioner.type", partitioner);
-        options.set("partitioner", partitioner);
-    }
-    else if (p.has("partitioner")) {
-        std::string partitioner;
-        p.get("partitioner", partitioner);
-        options.set("partitioner", partitioner);
-    }
+    try {
+        if (p.has("partitioner")) {
+            std::string partitioner;
+            p.get("partitioner", partitioner);
+            options.set("partitioner", partitioner);
+        }
+        else if (p.has("partitioner.type")) {
+            std::string partitioner;
+            p.get("partitioner.type", partitioner);
+            options.set("partitioner", partitioner);
+        }
+    } catch( std::exception& ) {}
 }
 
 // -----------------------------------------------------------------------------
